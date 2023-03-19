@@ -1,4 +1,7 @@
 spring:
+  sql:
+    init:
+      mode: always
   application:
     name: ea-project
   datasource:
@@ -15,9 +18,11 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       ddl-auto: create
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2016Dialect
+    defer-datasource-initialization: true
 logging:
   file:
     name: /Coding/Logging/${spring.application.name}/log
