@@ -27,6 +27,13 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public BadgeDTO createBadge(long memberId) {
+        List<Badge> badges = memberRepository.getAllBadges(memberId);
+        for(Badge badge : badges){
+            if(badge.getStatus().equals(BadgeStatus.ACTIVE)){
+                badge.setStatus(BadgeStatus.INACTIVE);
+                badgeRepository.save(badge);
+            }
+        }
         Badge badge = new Badge();
         Member member=memberRepository.findById(memberId).get();
         badge.setMember(member);
