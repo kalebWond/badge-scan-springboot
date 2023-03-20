@@ -29,4 +29,7 @@ public class Member {
     private List<Badge> badgeList;
     @OneToOne
     private Role role;
+    @OneToMany
+    @JoinTable(name = "member_membership_table")
+    private List<Membership> memberships;
 }
