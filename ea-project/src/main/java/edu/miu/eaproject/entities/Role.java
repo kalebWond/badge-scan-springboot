@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "role_table")
 public class Role {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String role;
 

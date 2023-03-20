@@ -24,9 +24,13 @@ public class Member {
     @Column(nullable = false)
     private String email;
     private String password;
-
+    @OneToMany(mappedBy = "member")
+    @JoinColumn(name = "memberId")
+    private List<Badge> badgeList;
     @OneToOne
     private Role role;
+
+
     @OneToMany
     @JoinTable(name = "member_membership_table")
     private List<Membership> memberships;
