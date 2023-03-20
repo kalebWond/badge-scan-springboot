@@ -24,9 +24,7 @@ public class Member {
     @Column(nullable = false)
     private String email;
     private String password;
-    @OneToMany
-    @JoinColumn(name = "memberId")
-    private List<Badge> badgeList;
+
     @OneToOne
     private Role role;
     @OneToMany
