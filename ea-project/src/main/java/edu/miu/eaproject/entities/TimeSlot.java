@@ -19,6 +19,7 @@ public class TimeSlot {
     private Long id;
     private LocalTime startTime;
     private LocalTime endTime;
+    @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
 

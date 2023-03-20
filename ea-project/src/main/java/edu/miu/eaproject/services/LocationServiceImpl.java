@@ -2,6 +2,7 @@ package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.Location;
 import edu.miu.eaproject.entities.LocationDTO;
+import edu.miu.eaproject.entities.enums.LocationType;
 import edu.miu.eaproject.repositories.LocationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
