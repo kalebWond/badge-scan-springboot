@@ -33,8 +33,9 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO updateMemberbyId(long id,MemberDTO memberDTO) {
         memberRepository.findById(id).orElseThrow(()->new RuntimeException("Member not found"));
-        Member address=mapper.map(memberDTO,Member.class);
-        memberRepository.save(address);
+        Member member=mapper.map(memberDTO,Member.class);
+        member.setId(id);
+        memberRepository.save(member);
         return memberDTO;
     }
 
