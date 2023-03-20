@@ -25,7 +25,7 @@ public class Member {
     private String email;
     private String password;
     @OneToMany(mappedBy = "member")
-    @JoinColumn(name = "memberId")
+
     private List<Badge> badgeList;
     @OneToOne
     private Role role;

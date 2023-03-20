@@ -23,6 +23,7 @@ public class Badge {
     private List<Transaction> transactionList;
 
     @ManyToOne
+    @JoinColumn(name = "memberId")
     private Member member;
 
 
