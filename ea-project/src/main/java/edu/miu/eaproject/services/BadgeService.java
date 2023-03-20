@@ -1,13 +1,20 @@
 package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.Badge;
+import edu.miu.eaproject.entities.BadgeDTO;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public interface BadgeService {
-    Badge createBadge();
+    BadgeDTO createBadge(long memberId);
 
-    Badge readBadge(Long id);
+    BadgeDTO readBadge(Long id);
 
-    Badge updateBadge(Badge badge);
+    BadgeDTO updateBadge(Badge badge);
 
     void deleteBadge(Badge badge);
+
+    List<BadgeDTO> getAllBadges();
 }

@@ -22,5 +22,8 @@ public class Badge {
     @JoinColumn(name = "badgeId")
     private List<Transaction> transactionList;
 
+    @ManyToOne
+    private Member member;
+
 
 }
