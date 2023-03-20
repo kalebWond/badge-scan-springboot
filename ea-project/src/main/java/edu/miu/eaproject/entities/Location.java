@@ -17,16 +17,20 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
     private String description;
     private int capacity;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private LocationType locationType;
+
     @OneToMany
     @JoinColumn(name = "locationId")
     private List<Transaction> transactionList;
-    @OneToMany
+
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "location_timeslot_table")
     private List<TimeSlot> timeSlots;
-
-
 }
