@@ -30,6 +30,7 @@ public class BadgeServiceImpl implements BadgeService {
     @Override
     public Badge updateBadge(Badge badge) {
         badgeRepository.save(badge);
+        return badge;
     }
 
     @Override
