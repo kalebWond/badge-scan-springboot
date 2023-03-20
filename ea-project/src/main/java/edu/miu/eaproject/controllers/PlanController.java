@@ -26,6 +26,10 @@ public class PlanController {
     public ResponseEntity<PlanDTO> getPlanById(@PathVariable Long planId){
         return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
     }
+    @GetMapping("/{planId}/locations")
+    public ResponseEntity<PlanDTO> getLocationsByPlanId(@PathVariable Long planId){
+        return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<PlanDTO> createPlan(@RequestBody PlanDTO planDTO){

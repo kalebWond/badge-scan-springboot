@@ -1,5 +1,6 @@
 package edu.miu.eaproject.services;
 
+import edu.miu.eaproject.entities.Location;
 import edu.miu.eaproject.entities.Plan;
 import edu.miu.eaproject.entities.PlanDTO;
 
@@ -12,4 +13,5 @@ public interface PlanService {
     List<PlanDTO> getAllPlans();
     PlanDTO updatePlan(Long planId, PlanDTO planDTO);
     void deletePlan(Long planId);
+
 }
