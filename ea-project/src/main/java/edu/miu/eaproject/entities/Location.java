@@ -27,6 +27,4 @@ public class Location {
     @OneToMany
     @JoinTable(name = "location_timeslot_table")
     private List<TimeSlot> timeSlots;
-
-
 }

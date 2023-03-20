@@ -1,6 +1,6 @@
 package edu.miu.eaproject.controllers;
 
-import edu.miu.eaproject.entities.Location;
+import edu.miu.eaproject.entities.LocationDTO;
 import edu.miu.eaproject.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +15,14 @@ public class LocationController {
     private LocationService locationService;
 
     @PostMapping
-    public void save(@RequestBody Location location){
+    public void save(@RequestBody LocationDTO location){
         locationService.save(location);
     }
 
     @GetMapping ("/{locationId}")
     public ResponseEntity<?> getLocation(@PathVariable("locationId") long locationId){
-        Location location = locationService.getLocation(locationId);
-        return new ResponseEntity<Location>(location, HttpStatus.OK);
+        LocationDTO location = locationService.getLocationById(locationId);
+        return new ResponseEntity<LocationDTO>(location, HttpStatus.OK);
     }
+
 }
