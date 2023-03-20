@@ -1,7 +1,9 @@
 package edu.miu.eaproject.services;
 
+import edu.miu.eaproject.entities.Location;
 import edu.miu.eaproject.entities.Plan;
 import edu.miu.eaproject.entities.PlanDTO;
+import edu.miu.eaproject.repositories.LocationRepository;
 import edu.miu.eaproject.repositories.PlanRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,23 @@ public class PlanServiceImpl implements PlanService{
     @Autowired
     private PlanRepository planRepository;
 
+    @Autowired
+    private LocationRepository locationRepository;
+
 
     @Override
     public PlanDTO createPlan(PlanDTO planDTO) {
-        try{
+        List<Long> locationIds = planDTO.getLocationIds();
+        List<Location> locations = new ArrayList<>();
+        for(Long locationId: locationIds){
+            locations.add(locationRepository.findById(locationId).get());
+        }
+
             Plan plan1= modelMapper.map(planDTO, Plan.class);
+            plan1.setLocations(locations);
             plan1= planRepository.save(plan1);
             return modelMapper.map(plan1, PlanDTO.class);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            throw e;
-        }
+
 
     }
 

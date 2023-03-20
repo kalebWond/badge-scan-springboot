@@ -15,9 +15,17 @@ public class PlanDTO {
     private String description;
     private List<Location> locations;
     private List<Role> roles;
+    private List<Long> locationIds;
 
+    public PlanDTO(String name, String description, List<Long> locationIds) {
+        this.name = name;
+        this.description = description;
+        this.locationIds = locationIds;
+    }
     public PlanDTO(String name, String description) {
         this.name = name;
         this.description = description;
+
     }
+
 }
