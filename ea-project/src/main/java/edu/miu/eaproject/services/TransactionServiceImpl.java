@@ -10,7 +10,6 @@ import edu.miu.eaproject.repositories.MembershipRepository;
 import edu.miu.eaproject.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,7 +42,7 @@ public class TransactionServiceImpl implements TransactionService{
     // check time slots with current time for that location
     // add transaction
     // increment current count on membership entity
-    // consider using @Transactional for the above 2
+
     @Override
     public Transaction createTransaction(long badgeId, long locationId) {
         Badge badge = badgeRepository.findByIdAndStatus(badgeId, BadgeStatus.ACTIVE);
@@ -55,7 +54,7 @@ public class TransactionServiceImpl implements TransactionService{
         }
         Member member = badge.getMember();
 //        System.out.println(member);
-        Membership membership = transactionRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId);
+        Membership membership = membershipRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId);
 //        System.out.println(membership);
         if(!checkMembershipExpiration(membership)) {
             saveTransaction(null, badge, TransactionType.DECLINED, membership);
@@ -72,14 +71,17 @@ public class TransactionServiceImpl implements TransactionService{
                 location = lc;
             }
         }
+        //
+        // add check if location is null
+        //
 //        System.out.println(location);
         TimeSlot openHour = getCurrentTimeslot(location);
 //        System.out.println(openHour);
-        if(membership.getMembershipType().equals(MembershipType.LIMITED) && openHour == null) {
+        if(openHour == null) {
             saveTransaction(location, badge, TransactionType.DECLINED, membership);
             throw new RuntimeException("Location is not open at this hour");
         }
-        if(membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntrance(badgeId, locationId, openHour)) {
+        if(membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
             saveTransaction(location, badge, TransactionType.DECLINED, membership);
             throw new RuntimeException("Member has already entered location at this timeslot");
         }
@@ -88,7 +90,7 @@ public class TransactionServiceImpl implements TransactionService{
         membershipRepository.save(membership);
 //        System.out.println(transaction);
 //        System.out.println(membership);
-        return null;
+        return transaction;
     }
 
     private boolean checkMembershipExpiration(Membership membership) {
@@ -121,9 +123,9 @@ public class TransactionServiceImpl implements TransactionService{
         return null;
     }
 
-    private boolean checkMultipleEntrance(Long badgeId, long locationId, TimeSlot timeSlot) {
-        LocalDateTime startDateTime = timeSlot.getStartTime().atDate(LocalDate.now());
-        LocalDateTime endDateTime = timeSlot.getEndTime().atDate(LocalDate.now());
+    private boolean checkMultipleEntranceFromTransaction(Long badgeId, long locationId, TimeSlot openHour) {
+        LocalDateTime startDateTime = openHour.getStartTime().atDate(LocalDate.now());
+        LocalDateTime endDateTime = openHour.getEndTime().atDate(LocalDate.now());
         int count = transactionRepository.countByBadgeIdAndLocationIdInTimeSlot(badgeId, locationId, startDateTime, endDateTime);
         if(count > 0) {
             return true;
