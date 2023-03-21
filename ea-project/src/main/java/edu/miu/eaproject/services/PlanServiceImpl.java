@@ -3,7 +3,7 @@ package edu.miu.eaproject.services;
 import edu.miu.eaproject.entities.*;
 import edu.miu.eaproject.repositories.LocationRepository;
 import edu.miu.eaproject.repositories.PlanRepository;
-import edu.miu.eaproject.repositories.RoleRepositoy;
+import edu.miu.eaproject.repositories.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,13 @@ public class PlanServiceImpl implements PlanService{
     @Autowired
     private LocationRepository locationRepository;
     @Autowired
-    private RoleRepositoy roleRepositoy;
+    private RoleRepository roleRepository;
 
 
     @Override
     public PlanResponseDTO createPlan(PlanDTO planDTO) {
         Location location=locationRepository.findById(planDTO.getLocationId()).get();
-        Role role = roleRepositoy.findById(planDTO.getRoleId()).get();
+        Role role = roleRepository.findById(planDTO.getRoleId()).get();
             List<Role> roles = new ArrayList<>();
             roles.add(role);
 
