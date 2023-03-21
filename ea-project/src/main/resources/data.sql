@@ -40,7 +40,7 @@ INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (1,'SUNDAY','1
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (2,'SUNDAY','20:00','18:00')
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (3,'MONDAY','10:00','08:30')
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (4,'MONDAY','14:00','12:00')
---INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (5,'TUESDAY','17:00','14:00')
+INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (5,'TUESDAY','17:00','14:00')
 
 SET IDENTITY_INSERT timeslot_table OFF
 
@@ -48,7 +48,7 @@ INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,1)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
---INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
 
 
 
