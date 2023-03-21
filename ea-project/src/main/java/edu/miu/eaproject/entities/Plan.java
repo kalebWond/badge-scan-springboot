@@ -20,7 +20,7 @@ public class Plan {
     private String name;
     private String description;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name="plan_location_table")
     private List<Location> locations =new ArrayList<>();
 

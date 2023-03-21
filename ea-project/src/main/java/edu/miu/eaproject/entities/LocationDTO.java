@@ -18,10 +18,4 @@ public class LocationDTO {
 	private LocationType locationType;
 	private List<TimeSlot> timeSlots;
 
-	public LocationDTO(String name, String description, int capacity, LocationType locationType) {
-		this.name = name;
-		this.description = description;
-		this.capacity = capacity;
-		this.locationType = locationType;
-	}
 }

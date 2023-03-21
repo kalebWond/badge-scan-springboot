@@ -3,14 +3,13 @@ package edu.miu.eaproject.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "badge_table")
@@ -27,6 +26,5 @@ public class Badge {
     @JoinColumn(name = "memberId")
     @JsonBackReference
     private Member member;
-
 
 }

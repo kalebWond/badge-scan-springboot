@@ -1,8 +1,8 @@
 SET IDENTITY_INSERT role_table ON
-INSERT INTO  role_table(id,role) values (1,'Student')
-INSERT INTO  role_table(id,role) values (2,'Faculty')
-INSERT INTO  role_table(id,role) values (3,'Staff')
-INSERT INTO  role_table(id,role) values (4,'Admin')
+INSERT INTO  role_table(id,role) values (1,'STUDENT')
+INSERT INTO  role_table(id,role) values (2,'FACULTY')
+INSERT INTO  role_table(id,role) values (3,'STAFF')
+INSERT INTO  role_table(id,role) values (4,'ADMIN')
 SET IDENTITY_INSERT role_table OFF
 
 SET IDENTITY_INSERT member_table ON
@@ -22,7 +22,7 @@ SET IDENTITY_INSERT plan_table OFF
 INSERT INTO plan_role_table(plan_table_id,roles_id) values (1,1)
 
 SET IDENTITY_INSERT membership_table ON
-INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,startDate,plan_id) values (1,'2024-12-31',0,20,'2024-12-31',1)
+INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,currentUsageCount, startDate,plan_id, resetTime) values (1,'2024-12-31',0,20,0,'2023-03-01',1, 'WEEKLY')
 SET IDENTITY_INSERT membership_table OFF
 
 
@@ -40,12 +40,15 @@ INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (1,'SUNDAY','1
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (2,'SUNDAY','20:00','18:00')
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (3,'MONDAY','10:00','08:30')
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (4,'MONDAY','14:00','12:00')
+--INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (5,'TUESDAY','17:00','14:00')
+
 SET IDENTITY_INSERT timeslot_table OFF
 
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,1)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
+--INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
 
 
 
