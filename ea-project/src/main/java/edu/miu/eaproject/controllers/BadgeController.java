@@ -1,8 +1,6 @@
 package edu.miu.eaproject.controllers;
 
 import edu.miu.eaproject.entities.BadgeDTO;
-import edu.miu.eaproject.entities.MemberDTO;
-import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.services.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +17,9 @@ public class BadgeController {
     private BadgeService badgeService;
 
     @GetMapping
-    public ResponseEntity<BadgeDTO> getAllBadges(){
+    public ResponseEntity<?> getAllBadges(){
         List<BadgeDTO> badges = badgeService.getAllBadges();
-        return new ResponseEntity(badges, HttpStatus.OK);
+        return new ResponseEntity<List<BadgeDTO>>(badges, HttpStatus.OK);
     }
 
     @PostMapping("/{memberId}")
