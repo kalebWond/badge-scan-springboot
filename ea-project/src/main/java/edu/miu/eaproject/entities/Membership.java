@@ -30,7 +30,9 @@ public class Membership {
     private List<Transaction> transactionList;
 
 
-    @OneToOne
+    @ManyToOne
     private Plan plan;
 
-}
+
+    }
+

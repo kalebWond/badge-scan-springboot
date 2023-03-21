@@ -25,7 +25,6 @@ public class Member {
     private String email;
     private String password;
     @OneToMany(mappedBy = "member")
-
     private List<Badge> badgeList;
     @OneToOne
     private Role role;
