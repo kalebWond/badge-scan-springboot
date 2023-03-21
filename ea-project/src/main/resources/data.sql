@@ -9,10 +9,49 @@ SET IDENTITY_INSERT member_table ON
     INSERT INTO member_table(id,email,firstName,lastName,role_id) values (1,'karna@miu.edu','Karna','Shrestha',1)
 SET IDENTITY_INSERT member_table OFF
 
---
--- SET IDENTITY_INSERT membership_table ON
---     INSERT INTO member_table(id,endDate,membershipType,numberOfAllowances,role_id) values (1,'karna@miu.edu','Karna','Shrestha',1)
--- SET IDENTITY_INSERT member_table OFF
+SET IDENTITY_INSERT badge_table ON
+    INSERT INTO badge_table(id,status,memberId) values (1,0,1)
+SET IDENTITY_INSERT badge_table OFF
+
+
+
+SET IDENTITY_INSERT plan_table ON
+INSERT INTO plan_table(id,description,name) values (1,'test descripton','Plan Dining Plan')
+SET IDENTITY_INSERT plan_table OFF
+
+INSERT INTO plan_role_table(plan_table_id,roles_id) values (1,1)
+
+SET IDENTITY_INSERT membership_table ON
+INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,startDate,plan_id) values (1,'2024-12-31',0,20,'2024-12-31',1)
+SET IDENTITY_INSERT membership_table OFF
+
+
+INSERT INTO member_membership_table(member_table_id,memberships_id) values (1,1)
+
+
+SET IDENTITY_INSERT location_table ON
+INSERT INTO location_table(id,capacity,description,locationType,name) values (1,200,'Dining hall location description','DINING_HALL','Dining')
+SET IDENTITY_INSERT location_table OFF
+
+INSERT INTO plan_location_table(plan_table_id,locations_id) values (1,1)
+
+SET IDENTITY_INSERT timeslot_table ON
+INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (1,'SUNDAY','14:00','11:00')
+INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (2,'SUNDAY','20:00','18:00')
+INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (3,'MONDAY','10:00','08:30')
+INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (4,'MONDAY','14:00','12:00')
+SET IDENTITY_INSERT timeslot_table OFF
+
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,1)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
+
+
+
+
+
+
 
 
 

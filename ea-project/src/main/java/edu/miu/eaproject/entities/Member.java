@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Member {
     private String email;
     private String password;
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Badge> badgeList;
     @OneToOne
     private Role role;
