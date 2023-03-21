@@ -79,11 +79,11 @@ public class BadgeServiceImpl implements BadgeService {
         badge.setStatus(BadgeStatus.ACTIVE);
         updateBadge(badge);
     }
-
+    @Override
     public List<BadgeDTO> getAllBadges() {
-        List<Badge> badgeList= badgeRepository.findAll();
-        return getDTOList(badgeList);
+            return getDTOList(badgeRepository.findAll());
     }
+
     private List<BadgeDTO> getDTOList(List<Badge> badgelist){
         List<BadgeDTO> badgeDTOList = new ArrayList<>();
         for(Badge badge: badgelist){
