@@ -2,7 +2,7 @@ package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
 import edu.miu.eaproject.repositories.MemberRepository;
-import edu.miu.eaproject.repositories.RoleRepositoy;
+import edu.miu.eaproject.repositories.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class MemberServiceImpl implements MemberService{
     @Autowired
     private ModelMapper mapper;
     @Autowired
-    private RoleRepositoy roleRepositoy;
+    private RoleRepository roleRepository;
     @Override
     public MemberDTO save(MemberDTO memberDTO) {
         Member member=mapper.map(memberDTO,Member.class);
-        Role role=roleRepositoy.findRoleByRoleIgnoreCase(memberDTO.getRole());
+        Role role= roleRepository.findRoleByRole(memberDTO.getRole());
         member.setRole(role);
         memberRepository.save(member);
         return memberDTO;
