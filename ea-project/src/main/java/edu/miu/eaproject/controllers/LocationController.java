@@ -1,6 +1,7 @@
 package edu.miu.eaproject.controllers;
 
 import edu.miu.eaproject.entities.LocationDTO;
+import edu.miu.eaproject.entities.PlanDTO;
 import edu.miu.eaproject.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,12 @@ public class LocationController {
     private LocationService locationService;
 
     @PostMapping
-    public void save(@RequestBody LocationDTO location){
-        locationService.save(location);
+    public ResponseEntity<LocationDTO> save(@RequestBody LocationDTO location){
+        return new ResponseEntity<>(locationService.save(location), HttpStatus.OK);
     }
+//    public ResponseEntity<PlanDTO> createPlan(@RequestBody PlanDTO planDTO){
+//        return new ResponseEntity<>(planService.createPlan(planDTO), HttpStatus.OK);
+//    }
     @GetMapping
     public ResponseEntity<?> getAllMembers(){
         List<LocationDTO> locations = locationService.getAllLocations();

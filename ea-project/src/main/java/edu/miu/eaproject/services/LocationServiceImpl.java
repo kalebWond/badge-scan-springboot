@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LocationServiceImpl implements LocationService{
+public class  LocationServiceImpl implements LocationService{
 
     @Autowired
     private ModelMapper mapper;
@@ -19,8 +19,8 @@ public class LocationServiceImpl implements LocationService{
     private LocationRepository locationRepository;
     @Override
     public LocationDTO save(LocationDTO location) {
-        locationRepository.save(mapper.map(location, Location.class));
-        return location;
+       Location newLocation= locationRepository.save(mapper.map(location, Location.class));
+       return mapper.map(newLocation, LocationDTO.class);
     }
     @Override
     public List<LocationDTO> getAllLocations() {
