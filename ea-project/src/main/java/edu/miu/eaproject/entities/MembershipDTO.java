@@ -19,7 +19,7 @@ public class MembershipDTO {
     private LocalDate endDate;
     private MembershipType membershipType;
     private int numberOfAllowances;
-    private PlanDTO plan;
-    private MemberDTO member;
+   private Member member;
+   private PlanDTO plan;
 
 }
