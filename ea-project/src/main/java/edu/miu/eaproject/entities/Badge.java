@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class Badge {
 
     @ManyToOne
     @JoinColumn(name = "memberId")
+    @JsonBackReference
     private Member member;
 
 
