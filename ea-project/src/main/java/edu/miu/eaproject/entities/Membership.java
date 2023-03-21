@@ -32,5 +32,5 @@ public class Membership {
 
     @OneToOne
     private Plan plan;
-
+// add current allowance count
 }

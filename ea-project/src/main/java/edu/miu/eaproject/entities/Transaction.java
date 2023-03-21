@@ -20,5 +20,11 @@ public class Transaction {
     private LocalDateTime transactionDateTime;
     private TransactionType transactionType;
 
-
+    @ManyToOne
+    private Location location;
+    @ManyToOne
+    private Membership membership;
+    @ManyToOne
+    @JoinColumn(name="badgeId")
+    private Badge badge;
 }
