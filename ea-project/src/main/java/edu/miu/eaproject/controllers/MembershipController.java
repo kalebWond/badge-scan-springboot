@@ -16,11 +16,17 @@ import java.util.List;
         @Autowired
         private MembershipService membershipService;
         @PostMapping
-        public ResponseEntity<MembershipDTO> addNewMembership(@RequestBody MembershipDTO membership){
+        public ResponseEntity<MembershipDTO> addNewMembership(@RequestBody MembershipDTO membership) throws ResourceException {
             return ResponseEntity.status(HttpStatus.OK).body(membershipService.createNewMembership(membership));
         }
+    @GetMapping("/members/{memberId}/memberships")
+        public ResponseEntity<List<MembershipDTO>> getMembershipsByMemberId(@PathVariable long memberId) throws ResourceException {
+        List<MembershipDTO> memberships = membershipService.getMembershipsByMemberId(memberId);
+        return new ResponseEntity<>(memberships, HttpStatus.OK);
+    }
 
-        @GetMapping
+
+    @GetMapping
         public ResponseEntity<List<MembershipDTO>> getAllMemberships(){
             return ResponseEntity.status(HttpStatus.OK).body(membershipService.getAllMemberships());
         }
