@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Plan {
 
     @OneToMany
     @JoinTable(name="plan_location_table")
-    private List<Location> locations;
+    private List<Location> locations =new ArrayList<>();
 
     @OneToMany
     @JoinTable(name="plan_role_table")
@@ -29,5 +30,8 @@ public class Plan {
     public Plan(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+    public void addLocation(Location location){
+        locations.add(location);
     }
 }

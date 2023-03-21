@@ -1,6 +1,7 @@
 package edu.miu.eaproject.controllers;
 
 import edu.miu.eaproject.entities.PlanDTO;
+import edu.miu.eaproject.entities.PlanResponseDTO;
 import edu.miu.eaproject.services.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ public class PlanController {
 
 
     @GetMapping
-    public ResponseEntity<Plans> getAllPlans(){
+    public ResponseEntity<PlanResponseDTO> getAllPlans(){
         Plans plans= new Plans();
         plans.setPlanDTOList(planService.getAllPlans());
 
@@ -23,21 +24,21 @@ public class PlanController {
     }
 
     @GetMapping("/{planId}")
-    public ResponseEntity<PlanDTO> getPlanById(@PathVariable Long planId){
+    public ResponseEntity<PlanResponseDTO> getPlanById(@PathVariable Long planId){
         return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
     }
     @GetMapping("/{planId}/locations")
-    public ResponseEntity<PlanDTO> getLocationsByPlanId(@PathVariable Long planId){
+    public ResponseEntity<PlanResponseDTO> getLocationsByPlanId(@PathVariable Long planId){
         return new ResponseEntity<>(planService.getPlanById(planId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<PlanDTO> createPlan(@RequestBody PlanDTO planDTO){
+    public ResponseEntity<PlanResponseDTO> createPlan(@RequestBody PlanDTO planDTO){
         return new ResponseEntity<>(planService.createPlan(planDTO), HttpStatus.OK);
     }
 
     @PutMapping("/{planId}")
-    public ResponseEntity<PlanDTO> updatePlan(@PathVariable Long planId, @RequestBody PlanDTO planDTO){
+    public ResponseEntity<PlanResponseDTO> updatePlan(@PathVariable Long planId, @RequestBody PlanDTO planDTO){
         return new ResponseEntity<>(planService.updatePlan(planId, planDTO), HttpStatus.OK);
     }
 
