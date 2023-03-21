@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ public class BadgeDTO {
     private BadgeStatus status;
 
     private List<Transaction> transactionList;
+
+    private Member member;
 
 
 }
