@@ -1,6 +1,8 @@
 package edu.miu.eaproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +22,7 @@ public class Badge {
     private BadgeStatus status;
     @OneToMany
     @JoinColumn(name = "badgeId")
+    @JsonIgnore
     private List<Transaction> transactionList;
 
     @ManyToOne
