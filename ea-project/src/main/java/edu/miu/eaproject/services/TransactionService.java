@@ -6,6 +6,8 @@ import edu.miu.eaproject.entities.TransactionDTO;
 import java.util.List;
 
 public interface TransactionService {
+    public List<TransactionDTO> getAllTransactions();
+    public TransactionDTO getTransactionByID(Long id);
     public List<Transaction> findTransactionsByMemberId(Long memberId);
     public TransactionDTO createTransaction(long badgeId, long locationId);
 }

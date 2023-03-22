@@ -6,12 +6,14 @@ import edu.miu.eaproject.repositories.MemberRepository;
 import edu.miu.eaproject.repositories.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService{
+
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
@@ -20,13 +22,30 @@ public class MemberServiceImpl implements MemberService{
     private RoleRepository roleRepository;
     @Autowired
     private BadgeRepository badgeRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+//    @Override
+//    public MemberDTO save(MemberDTO memberDTO) {
+//        Member member=mapper.map(memberDTO,Member.class);
+//        Role role= roleRepository.findRoleByRole(memberDTO.getRole());
+//        member.setRole(role);
+//        memberRepository.save(member);
+//        return memberDTO;
+//    }
+
     @Override
-    public MemberDTO save(MemberDTO memberDTO) {
-        Member member=mapper.map(memberDTO,Member.class);
+    public MemberDTO createNewMember(MemberDTO memberDTO) {
+        Member member = mapper.map(memberDTO, Member.class);
+        member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+
         Role role= roleRepository.findRoleByRole(memberDTO.getRole());
         member.setRole(role);
+
         memberRepository.save(member);
-        return memberDTO;
+
+        return mapper.map(member, MemberDTO.class);
     }
 
     @Override

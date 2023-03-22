@@ -5,7 +5,7 @@ import edu.miu.eaproject.entities.*;
 import java.util.List;
 
 public interface MemberService {
-    public MemberDTO save(MemberDTO memberDTO);
+    public MemberDTO createNewMember(MemberDTO memberDTO);
     public List<MemberDTO> getAllMembers();
     public MemberDTO getMemberById(long id);
     public MemberDTO updateMemberbyId(long id,MemberDTO memberDTO);

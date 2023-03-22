@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
@@ -25,6 +26,18 @@ public class TransactionServiceImpl implements TransactionService{
     TransactionRepository transactionRepository;
     @Autowired
     MembershipRepository membershipRepository;
+    @Autowired
+    ModelMapper modelMapper;
+
+    public TransactionDTO getTransactionByID(Long id){
+        Transaction transaction = transactionRepository.findById(id).get();
+        return modelMapper.map(transaction, TransactionDTO.class);
+    }
+
+    public List<TransactionDTO> getAllTransactions(){
+        List<Transaction> transactionList = transactionRepository.findAll();
+        return transactionList.stream().map(transaction -> modelMapper.map(transaction,TransactionDTO.class)).collect(Collectors.toList());
+    }
 
     @Override
     public List<Transaction> findTransactionsByMemberId(Long memberId) {
