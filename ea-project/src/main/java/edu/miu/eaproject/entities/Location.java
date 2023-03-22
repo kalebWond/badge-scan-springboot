@@ -32,4 +32,6 @@ public class Location {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "location_timeslot_table")
     private List<TimeSlot> timeSlots;
+
+
 }

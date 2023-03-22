@@ -25,6 +25,21 @@ public class BadgeServiceImpl implements BadgeService {
     @Autowired
     private ModelMapper modelMapper;
 
+// complex usecase 2
+    @Override
+    public List<BadgeDTO> getActiveBadgesForMember(long memberId) {
+        List<Badge> badges = memberRepository.getAllBadges(memberId);
+        List<BadgeDTO> activeBadges = new ArrayList<>();
+
+        for (Badge badge : badges) {
+            if (badge.getStatus().equals(BadgeStatus.ACTIVE)) {
+                activeBadges.add(getDto(badge));
+            }
+        }
+        return activeBadges;
+    }
+
+
     @Override
     public BadgeDTO createBadge(long memberId) {
         List<Badge> badges = memberRepository.getAllBadges(memberId);

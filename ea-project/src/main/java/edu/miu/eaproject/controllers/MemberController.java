@@ -1,6 +1,7 @@
 package edu.miu.eaproject.controllers;
 
 import edu.miu.eaproject.entities.*;
+import edu.miu.eaproject.services.BadgeService;
 import edu.miu.eaproject.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,18 @@ import java.util.List;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    private BadgeService badgeService;
+
+    @GetMapping("{memberId}/badges/active")
+    public ResponseEntity<List<BadgeDTO>> getActiveBadgesForMember(@PathVariable long memberId) {
+        List<BadgeDTO> activeBadges = badgeService.getActiveBadgesForMember(memberId);
+
+        if (activeBadges.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(activeBadges, HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody MemberDTO memberDTO){
