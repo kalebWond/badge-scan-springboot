@@ -18,10 +18,6 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime timestamp;//USED FOR COMPLEX USE CASE
-    private boolean allowed; //USED FOR COMPLEX USE CASE
-    @ManyToOne
-    private Member member;// member USED FOR COMPLEX USE CASE
     @ManyToOne
     private Plan plan; // PLAN USED FOR COMPLEX USE CASE
     private LocalDateTime transactionDateTime;
@@ -37,21 +33,12 @@ public class Transaction {
     @JoinColumn(name="badgeId")
     private Badge badge;
 
-    public Transaction(LocalDateTime transactionDateTime, TransactionType transactionType, Location location, Membership membership, Badge badge) {
+    public Transaction(LocalDateTime transactionDateTime, TransactionType transactionType, Location location, Membership membership, Badge badge, Plan plan) {
         this.transactionDateTime = transactionDateTime;
         this.transactionType = transactionType;
         this.location = location;
         this.membership = membership;
         this.badge = badge;
-    }
-
-    public Transaction(LocalDateTime timestamp, boolean allowed, TransactionType transactionType, Member member, Plan plan, Location location) {
-        this.timestamp = timestamp;
-        this.allowed = allowed;
-        this.transactionType = transactionType;
-        this.member = member;
         this.plan = plan;
-        this.location = location;
     }
-
 }

@@ -27,16 +27,16 @@ public class BadgeServiceImpl implements BadgeService {
 
 // complex usecase 2
     @Override
-    public List<BadgeDTO> getActiveBadgesForMember(long memberId) {
+    public BadgeDTO getActiveBadgeForMember(long memberId) {
         List<Badge> badges = memberRepository.getAllBadges(memberId);
-        List<BadgeDTO> activeBadges = new ArrayList<>();
+        BadgeDTO activeBadge = null;
 
         for (Badge badge : badges) {
             if (badge.getStatus().equals(BadgeStatus.ACTIVE)) {
-                activeBadges.add(getDto(badge));
+                activeBadge=getDto(badge);
             }
         }
-        return activeBadges;
+        return activeBadge;
     }
 
 

@@ -5,10 +5,10 @@ import edu.miu.eaproject.entities.*;
 import java.util.List;
 
 public interface MemberService {
-    public MemberDTO createNewMember(MemberDTO memberDTO);
-    public List<MemberDTO> getAllMembers();
-    public MemberDTO getMemberById(long id);
-    public MemberDTO updateMemberbyId(long id,MemberDTO memberDTO);
+    public MemberResponseDTO save(MemberDTO memberDTO);
+    public List<MemberResponseDTO> getAllMembers();
+    public MemberResponseDTO getMemberById(long id);
+    public MemberResponseDTO updateMemberbyId(long id,MemberDTO memberDTO);
 
     public void deleteById(long id);
 
@@ -17,10 +17,4 @@ public interface MemberService {
     public List<Membership> getMembershipsByMember(long memberId);
     List<Plan> getPlansByMember(long memberId);
     List<Badge> getBadgesByMember(long memberId);
-
-
-
-
-
-
 }

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/plans")
+@RequestMapping("/api/plans")
 public class PlanController {
     @Autowired
     private PlanService planService;

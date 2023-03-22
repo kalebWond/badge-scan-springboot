@@ -18,14 +18,15 @@ SET IDENTITY_INSERT plan_table ON
 INSERT INTO plan_table(id,description,name) values (1,'test descripton','Plan Dining Plan')
 SET IDENTITY_INSERT plan_table OFF
 
--- INSERT INTO plan_role_table(plan_table_id,roles_id) values (1,1)
+
 
 SET IDENTITY_INSERT membership_table ON
 INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,currentUsageCount, startDate,plan_id, resetTime,memberId) values (1,'2024-12-31',0,20,0,'2023-03-01',1, 'WEEKLY',1)
 SET IDENTITY_INSERT membership_table OFF
 
-
--- INSERT INTO member_membership_table(member_table_id,memberships_id) values (1,1)
+SET IDENTITY_INSERT membership_table ON
+INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,currentUsageCount, startDate,plan_id, resetTime,memberId) values (2,'2024-12-31',2,20,0,'2023-03-01',1, 'WEEKLY',1)
+SET IDENTITY_INSERT membership_table OFF
 
 
 SET IDENTITY_INSERT location_table ON
@@ -33,7 +34,6 @@ INSERT INTO location_table(id,capacity,description,locationType,name,planId) val
 SET IDENTITY_INSERT location_table OFF
 
 
--- INSERT INTO plan_location_table(plan_table_id,locations_id) values (1,1)
 
 SET IDENTITY_INSERT timeslot_table ON
 INSERT INTO timeslot_table(id,dayOfWeek,endTime,startTime) values (1,'SUNDAY','14:00','11:00')
@@ -64,11 +64,4 @@ INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
-
-
-
-
-
-
-
-
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,10)
