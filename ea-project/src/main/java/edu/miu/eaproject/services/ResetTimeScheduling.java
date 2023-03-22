@@ -18,8 +18,7 @@ public class ResetTimeScheduling {
     @Autowired
     MembershipRepository membershipRepository;
 
-    //schedule for weekly resetTime
-
+    //schedule for weekly resetTime, at midnight every monday
     @Scheduled(cron = "0 0 1 * ?") //other option: 0 0 1 * *
     public void resetNumberOfCurrentUsageForWeekly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.WEEKLY);
@@ -30,41 +29,5 @@ public class ResetTimeScheduling {
     public void resetNumberOfCurrentUsageForMonthly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.MONTHLY);
     }
-
-
-
-//    @Scheduled(cron = "0 0 ? * MON")
-//    public void resetNumberOfCurrentUsageForStudent() {
-//        //only student,  membership for dinning hall
-//        //membership type = limited
-//        //reset time = weekly
-//        //roletype = student
-//        List<Member> members = memberRepository.getAllMembersWithStudentRole("STUDENT");
-//        for (Member member : members) {
-//            List<Membership> memberships = member.getMemberships();
-//            for (Membership membership : memberships) {
-//                List<Location> locations = membership.getPlan().getLocations();
-//                for (Location location : locations) {
-//                    if (location.getLocationType().equals("DINING_HALL")) {
-//                        membership.setCurrentUsageCount(0);
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    //    @Scheduled(cron = "0 0 ? * MON") //other option: 0 0 * * 1
-//    public void resetNumberOfCurrentUsageForWeekly() {
-//        List<Member> members = memberRepository.findAll();
-//        for (Member member : members) {
-//            List<Membership> memberships = member.getMemberships();
-//            for (Membership membership : memberships) {
-//                if (membership.getResetTime().equals("WEEKLY")) {
-//                    membership.setCurrentUsageCount(0);
-//                }
-//            }
-//        }
-//    }
-
 
 }
