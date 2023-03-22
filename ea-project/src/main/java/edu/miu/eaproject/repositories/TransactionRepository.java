@@ -15,6 +15,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     public int countByBadgeIdAndLocationIdInTimeSlot(long badgeId, long locationId, LocalDateTime startTime, LocalDateTime endTime);
     @Query("select ms from Member m JOIN m.memberships ms join ms.plan p join p.locations l where l.id=:locationId and m.id=:memberId")
     public Membership findMembershipByMemberIdAndLocationId(long memberId, long locationId);
-
+    List<Transaction> findByMember_Id(Long memberId);
 
 }

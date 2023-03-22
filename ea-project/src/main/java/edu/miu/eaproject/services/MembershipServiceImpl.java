@@ -29,7 +29,7 @@ public class MembershipServiceImpl implements MembershipService {
     private ModelMapper modelMapper;
 
 
-
+// COMPLEX USECASE A
     @Override
     public List<MembershipDTO> getMembershipsByMemberId(long memberId) throws ResourceException {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new ResourceException("Member Not found"));
