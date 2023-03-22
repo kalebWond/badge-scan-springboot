@@ -2,6 +2,7 @@ package edu.miu.eaproject.repositories;
 import edu.miu.eaproject.entities.Member;
 import edu.miu.eaproject.entities.Membership;
 import edu.miu.eaproject.entities.enums.MembershipType;
+import edu.miu.eaproject.entities.enums.ResetTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,8 @@ public interface MembershipRepository extends JpaRepository<Membership,Long> {
     public List<Membership> findMembershipByMemberIdAndLocationId(long memberId, long locationId);
     List<Membership> findByMemberIdAndMembershipType(long memberId, MembershipType membershipType);
     Member findMemberByEmailAddressIgnoreCase(String email);
+
+     @Query(value = "update membership_table set currentUsageCount = 0 where resetTime=:resetTime", nativeQuery = true)
+    public  void resetCurrentUsageCountByResetTime(ResetTime resetTime);
 
 }

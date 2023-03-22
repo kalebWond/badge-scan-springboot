@@ -1,5 +1,6 @@
 package edu.miu.eaproject.services;
 
+import edu.miu.eaproject.entities.MemberDTO;
 import edu.miu.eaproject.entities.MembershipDTO;
 
 import javax.resource.ResourceException;
