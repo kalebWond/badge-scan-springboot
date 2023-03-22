@@ -20,6 +20,9 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     @Query("Select ms.plan from Member m JOIN m.memberships ms where m.id=:memberId ")
     List<Plan> getPlansByMember(long memberId);
 
+    @Query("Select m from Member m where m.role.role=:STUDENT")
+    List<Member> getAllMembersWithStudentRole(String STUDENT );
+
 
 
 
