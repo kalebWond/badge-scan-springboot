@@ -13,8 +13,6 @@ public class BadgeDTO {
     private Long id;
     private BadgeStatus status;
 
-    private List<Transaction> transactionList;
-
     private Member member;
 
 

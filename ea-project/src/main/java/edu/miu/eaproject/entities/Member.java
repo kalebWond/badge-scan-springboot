@@ -35,8 +35,6 @@ public class Member {
     private Role role;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "member_membership_table")@
-    @JoinColumn(name = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<Membership> memberships;
 }

@@ -36,7 +36,13 @@ public class Membership {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "membershipId")
+    @JsonIgnore
     private List<Transaction> transactionList;
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    @JsonIgnore
+    private Member member;
 
 @JsonIgnore
     @ManyToOne

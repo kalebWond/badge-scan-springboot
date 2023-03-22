@@ -42,9 +42,9 @@ import java.util.List;
         }
 
         @DeleteMapping("{id}")
-        public ResponseEntity<Object> deleteMembership(@PathVariable Long id) throws ResourceException {
+        public ResponseEntity<String> deleteMembership(@PathVariable Long id) throws ResourceException {
             membershipService.deleteMembership(id);
-            return (ResponseEntity<Object>) ResponseEntity.status(HttpStatus.OK);
+            return new ResponseEntity<String> ("Membership Successfully deleted",HttpStatus.OK);
         }
     }
 
