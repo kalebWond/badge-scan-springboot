@@ -65,12 +65,3 @@ INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,10)
-
-
---
---
---
---
---
-
---
