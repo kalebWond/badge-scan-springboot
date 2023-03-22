@@ -24,6 +24,10 @@ SET IDENTITY_INSERT membership_table ON
 INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,currentUsageCount, startDate,plan_id, resetTime,memberId) values (1,'2024-12-31',0,20,0,'2023-03-01',1, 'WEEKLY',1)
 SET IDENTITY_INSERT membership_table OFF
 
+SET IDENTITY_INSERT membership_table ON
+INSERT INTO membership_table(id,endDate,membershipType,numberOfAllowances,currentUsageCount, startDate,plan_id, resetTime,memberId) values (2,'2024-12-31',2,20,0,'2023-03-01',1, 'WEEKLY',1)
+SET IDENTITY_INSERT membership_table OFF
+
 
 SET IDENTITY_INSERT location_table ON
 INSERT INTO location_table(id,capacity,description,locationType,name,planId) values (1,200,'Dining hall location description','DINING_HALL','Dining',1)
@@ -60,6 +64,8 @@ INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,10)
+
 
 --
 --

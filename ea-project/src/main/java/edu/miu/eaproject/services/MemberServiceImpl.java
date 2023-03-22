@@ -78,7 +78,6 @@ public class MemberServiceImpl implements MemberService{
        // return memberRepository.getAllBadges(memberId);
     }
 
-
     private List<MemberResponseDTO> getDtoList(List<Member> members) {
         return members.stream().map(this::getDto).toList();
     }

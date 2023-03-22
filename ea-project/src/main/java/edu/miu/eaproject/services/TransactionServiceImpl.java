@@ -49,19 +49,19 @@ public class TransactionServiceImpl implements TransactionService{
         System.out.println(badge);
 
         if(badge == null) {
-            saveTransaction(null, badge, TransactionType.DECLINED, null);
+            saveTransaction(null, badge, TransactionType.DECLINED, null, null);
             throw new RuntimeException("Active Badge doesn't exist");
         }
         Member member = badge.getMember();
 //        System.out.println(member);
-        Membership membership = membershipRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId);
+        Membership membership = membershipRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId).get(0);
 //        System.out.println(membership);
         if(!checkMembershipExpiration(membership)) {
-            saveTransaction(null, badge, TransactionType.DECLINED, membership);
+            saveTransaction(null, badge, TransactionType.DECLINED, membership, null);
             throw new RuntimeException("Membership has expired");
         }
         if(membership.getMembershipType().equals(MembershipType.LIMITED) && !checkAllowanceUsage(membership)) {
-            saveTransaction(null, badge, TransactionType.DECLINED, membership);
+            saveTransaction(null, badge, TransactionType.DECLINED, membership, null);
             throw new RuntimeException("Membership allowance used up");
         }
         Plan plan = membership.getPlan();
@@ -78,14 +78,14 @@ public class TransactionServiceImpl implements TransactionService{
         TimeSlot openHour = getCurrentTimeslot(location);
 //        System.out.println(openHour);
         if(openHour == null) {
-            saveTransaction(location, badge, TransactionType.DECLINED, membership);
+            saveTransaction(location, badge, TransactionType.DECLINED, membership, plan);
             throw new RuntimeException("Location is not open at this hour");
         }
         if(membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
-            saveTransaction(location, badge, TransactionType.DECLINED, membership);
+            saveTransaction(location, badge, TransactionType.DECLINED, membership, plan);
             throw new RuntimeException("Member has already entered location at this timeslot");
         }
-        Transaction transaction = saveTransaction(location, badge, TransactionType.ALLOWED, membership);
+        Transaction transaction = saveTransaction(location, badge, TransactionType.ALLOWED, membership, plan);
         membership.setCurrentUsageCount(membership.getCurrentUsageCount()+1);
         membershipRepository.save(membership);
 //        System.out.println(transaction);
@@ -133,8 +133,8 @@ public class TransactionServiceImpl implements TransactionService{
         return false;
     }
 
-    private Transaction saveTransaction(Location location, Badge badge, TransactionType transactionType, Membership membership) {
-        Transaction transaction = new Transaction(LocalDateTime.now(), transactionType, location, membership, badge);
+    private Transaction saveTransaction(Location location, Badge badge, TransactionType transactionType, Membership membership, Plan plan) {
+        Transaction transaction = new Transaction(LocalDateTime.now(), transactionType, location, membership, badge, plan);
         transactionRepository.save(transaction);
         return transaction;
     }

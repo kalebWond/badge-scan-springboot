@@ -68,7 +68,6 @@ public class MemberController {
     }
 
 
-
     @GetMapping("/{memberId}/plans")
     public ResponseEntity<?> getPlansByMember(@PathVariable long memberId){
         return new ResponseEntity<List<Plan>>(memberService.getPlansByMember(memberId),HttpStatus.OK);

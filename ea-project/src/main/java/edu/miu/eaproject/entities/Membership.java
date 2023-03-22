@@ -35,7 +35,7 @@ public class Membership {
     private ResetTime resetTime;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "membershipId")
+    @JoinColumn(name = "membership_id")
     @JsonIgnore
     private List<Transaction> transactionList;
 
