@@ -40,8 +40,8 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Override
     public MembershipDTO createNewMembership(MembershipDTO membershipDTO) throws ResourceException {
-        Member member = memberRepository.findById(membershipDTO.getMember().getId()).orElseThrow(()->new ResourceException("Member Not found"));
-        Plan plan = planRepository.findById(membershipDTO.getPlan().getId()).orElseThrow(()->new ResourceException("Plan Not found"));
+        Member member = memberRepository.findById(membershipDTO.getMemberId()).orElseThrow(()->new ResourceException("Member Not found"));
+        Plan plan = planRepository.findById(membershipDTO.getPlanId()).orElseThrow(()->new ResourceException("Plan Not found"));
         Membership membership = modelMapper.map(membershipDTO, Membership.class);
         membership.setPlan(plan);
 //        List<Membership> memberships = member.getMemberships();
@@ -50,6 +50,7 @@ public class MembershipServiceImpl implements MembershipService {
 //        }
         memberships.add(membership);
         member.setMemberships(memberships);
+//        membershipRepository.save(memberships);
         memberRepository.save(member);
         return modelMapper.map(membership,MembershipDTO.class);
     }
