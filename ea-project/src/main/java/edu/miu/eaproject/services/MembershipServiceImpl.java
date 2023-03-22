@@ -43,15 +43,18 @@ public class MembershipServiceImpl implements MembershipService {
         Member member = memberRepository.findById(membershipDTO.getMemberId()).orElseThrow(()->new ResourceException("Member Not found"));
         Plan plan = planRepository.findById(membershipDTO.getPlanId()).orElseThrow(()->new ResourceException("Plan Not found"));
         Membership membership = modelMapper.map(membershipDTO, Membership.class);
+
         membership.setPlan(plan);
+        membership.setMember(member);
 //        List<Membership> memberships = member.getMemberships();
 //        if(memberships == null) {
         List<Membership> memberships = new ArrayList<>();
 //        }
-        memberships.add(membership);
-        member.setMemberships(memberships);
-//        membershipRepository.save(memberships);
-        memberRepository.save(member);
+//        memberships.add(membership);
+//        member.setMemberships(memberships);
+////        membershipRepository.save(memberships);
+//        memberRepository.save(member);
+       membership= membershipRepository.save(membership);
         return modelMapper.map(membership,MembershipDTO.class);
     }
 

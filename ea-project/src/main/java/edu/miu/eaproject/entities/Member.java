@@ -3,19 +3,16 @@ package edu.miu.eaproject.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member_table")
-@ToString
 public class Member {
 
     @Id
@@ -35,8 +32,6 @@ public class Member {
     private Role role;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "member_membership_table")@
-    @JoinColumn(name = "memberId")
+    @OneToMany(mappedBy = "member")
     private List<Membership> memberships;
 }

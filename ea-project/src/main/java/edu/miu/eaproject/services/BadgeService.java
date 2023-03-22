@@ -17,6 +17,6 @@ public interface BadgeService {
     void deleteBadge(Badge badge);
 
     List<BadgeDTO> getAllBadges();
-    List<BadgeDTO> getActiveBadgesForMember(long memberId);
+    BadgeDTO getActiveBadgeForMember(long memberId);
 
 }
