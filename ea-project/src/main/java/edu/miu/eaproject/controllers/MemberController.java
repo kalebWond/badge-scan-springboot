@@ -18,20 +18,20 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody MemberDTO memberDTO){
-        MemberDTO member=memberService.save(memberDTO);
-        return new ResponseEntity<MemberDTO>(member, HttpStatus.OK);
+        MemberResponseDTO member=memberService.save(memberDTO);
+        return new ResponseEntity<MemberResponseDTO>(member, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> getAllMembers(){
-        List<MemberDTO> members=memberService.getAllMembers();
-        return new ResponseEntity<List<MemberDTO>>(members, HttpStatus.OK);
+        List<MemberResponseDTO> members=memberService.getAllMembers();
+        return new ResponseEntity<List<MemberResponseDTO>>(members, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable long id, @RequestBody MemberDTO memberDTO){
          memberService.updateMemberbyId(id,memberDTO);
-         return new ResponseEntity<String>("Member successfully deleted",HttpStatus.ACCEPTED);
+         return new ResponseEntity<String>("Member successfully updated",HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
@@ -43,7 +43,7 @@ public class MemberController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMemberById(@PathVariable long id){
-        return new ResponseEntity<MemberDTO>(memberService.getMemberById(id),HttpStatus.OK);
+        return new ResponseEntity<MemberResponseDTO>(memberService.getMemberById(id),HttpStatus.OK);
 
     }
 
