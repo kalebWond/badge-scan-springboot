@@ -1,7 +1,6 @@
 package edu.miu.eaproject.controllers;
 import edu.miu.eaproject.entities.LoginRequest;
 import edu.miu.eaproject.entities.LoginResponse;
-import edu.miu.eaproject.entities.RegisterRequest;
 import edu.miu.eaproject.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,10 +17,5 @@ public class AuthController {
         return authService.login(loginRequest);
     }
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.OK)
-    public void register(@RequestBody RegisterRequest registerRequest) {
-        authService.register(registerRequest);
-    }
 
 }

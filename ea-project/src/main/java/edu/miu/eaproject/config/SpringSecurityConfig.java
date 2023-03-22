@@ -1,8 +1,6 @@
 package edu.miu.eaproject.config;
-
+import edu.miu.eaproject.entities.enums.RoleType;
 import edu.miu.eaproject.filter.JwtFilter;
-import edu.miu.waa.project.backend.enumSet.RoleType;
-import edu.miu.waa.project.backend.filter.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,19 +27,16 @@ public class SpringSecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     //By default, AuthenticationManager(required to authenticate later) is not publicly accessible, and we need to explicitly expose it as a bean in our configuration class.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -51,8 +46,6 @@ public class SpringSecurityConfig {
 
         return authProvider;
     }
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Enable CSRF and disable CSRF
@@ -76,38 +69,7 @@ public class SpringSecurityConfig {
                 .and();
         // Set permissions on endpoints
         http.authorizeHttpRequests()
-                .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/api/v1/authenticate/**").permitAll()
-
-                .requestMatchers(HttpMethod.GET,"/api/v1/users").hasAuthority(RoleType.ADMIN.name())
-                .requestMatchers(HttpMethod.GET,"/api/v1/users/*").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-
-                .requestMatchers(HttpMethod.GET, "/api/v1/properties/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/properties").hasAuthority(RoleType.OWNER.name())
-                .requestMatchers(HttpMethod.PUT, "/api/v1/properties/*").hasAuthority(RoleType.OWNER.name())
-
-                .requestMatchers(HttpMethod.POST, "/api/v1/properties/*/inquiry").hasAuthority(RoleType.CUSTOMER.name())
-                .requestMatchers(HttpMethod.GET, "/api/v1/properties/*/inquiry").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-
-                .requestMatchers(HttpMethod.POST, "/api/v1/properties/*/favourite").hasAuthority(RoleType.CUSTOMER.name())
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/properties/*/favourite").hasAuthority(RoleType.CUSTOMER.name())
-
-
-                .requestMatchers(HttpMethod.POST, "/api/v1/properties/*/offer").hasAuthority(RoleType.CUSTOMER.name())
-                .requestMatchers(HttpMethod.GET, "/api/v1/properties/*/offer").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-                .requestMatchers(HttpMethod.PUT, "/api/v1/properties/*/offer").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-
-                .requestMatchers(HttpMethod.GET, "/api/v1/offers").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-                .requestMatchers(HttpMethod.GET, "/api/v1/offers/owner/*").hasAuthority(RoleType.OWNER.name())
-
-
-                .requestMatchers(HttpMethod.GET, "/api/v1/inquiry").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-
-
-                .requestMatchers(HttpMethod.PUT, "/api/v1/offers").hasAnyAuthority(RoleType.CUSTOMER.name(), RoleType.OWNER.name())
-
-                .requestMatchers("/api/v1/admin/**").hasAuthority(RoleType.ADMIN.name())
-                .anyRequest().authenticated();
+                .requestMatchers("/api/v1/authenticate/**").permitAll().anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

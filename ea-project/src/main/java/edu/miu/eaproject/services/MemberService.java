@@ -1,10 +1,11 @@
 package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
     public MemberDTO save(MemberDTO memberDTO);
     public List<MemberDTO> getAllMembers();
     public MemberDTO getMemberById(long id);
