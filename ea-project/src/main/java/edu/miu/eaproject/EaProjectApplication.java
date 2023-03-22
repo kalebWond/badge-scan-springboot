@@ -21,6 +21,6 @@ public class EaProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		transactionService.createTransaction(1, 1);
+		//transactionService.createTransaction(1, 1);
 	}
 }
