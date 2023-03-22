@@ -21,31 +21,32 @@ public class MemberServiceImpl implements MemberService{
     @Autowired
     private BadgeRepository badgeRepository;
     @Override
-    public MemberDTO save(MemberDTO memberDTO) {
+    public MemberResponseDTO save(MemberDTO memberDTO) {
         Member member=mapper.map(memberDTO,Member.class);
         Role role= roleRepository.findRoleByRole(memberDTO.getRole());
         member.setRole(role);
-        memberRepository.save(member);
-        return memberDTO;
+         member=memberRepository.save(member);
+         return mapper.map(member,MemberResponseDTO.class);
+
     }
 
     @Override
-    public List<MemberDTO> getAllMembers() {
+    public List<MemberResponseDTO> getAllMembers() {
         return getDtoList(memberRepository.findAll());
     }
 
     @Override
-    public MemberDTO getMemberById(long id) {
+    public MemberResponseDTO getMemberById(long id) {
         return getDto(memberRepository.findById(id).get());
     }
 
     @Override
-    public MemberDTO updateMemberbyId(long id,MemberDTO memberDTO) {
+    public MemberResponseDTO updateMemberbyId(long id,MemberDTO memberDTO) {
         memberRepository.findById(id).orElseThrow(()->new RuntimeException("Member not found"));
         Member member=mapper.map(memberDTO,Member.class);
         member.setId(id);
-        memberRepository.save(member);
-        return memberDTO;
+        member=memberRepository.save(member);
+        return mapper.map(member,MemberResponseDTO.class);
     }
 
     @Override
@@ -77,12 +78,11 @@ public class MemberServiceImpl implements MemberService{
        // return memberRepository.getAllBadges(memberId);
     }
 
-
-    private List<MemberDTO> getDtoList(List<Member> members) {
+    private List<MemberResponseDTO> getDtoList(List<Member> members) {
         return members.stream().map(this::getDto).toList();
     }
-    private MemberDTO getDto(Member job) {
-        return mapper.map(job, MemberDTO.class);
+    private MemberResponseDTO getDto(Member job) {
+        return mapper.map(job, MemberResponseDTO.class);
     }
 
 }

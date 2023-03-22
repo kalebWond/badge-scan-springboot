@@ -30,7 +30,7 @@ public class CheckerServiceImpl implements CheckerService {
 //USE CASE B
     @Override
     public List<MembershipDTO> getCheckerMemberships(Long checkerMemberId) {
-        List<Membership> memberships = membershipRepository.findByMember_IdAndMembershipType(checkerMemberId, MembershipType.CHECKER);
+        List<Membership> memberships = membershipRepository.findByMemberIdAndMembershipType(checkerMemberId, MembershipType.CHECKER);
         return memberships.stream().map(membership -> modelMapper.map(membership, MembershipDTO.class)).collect(Collectors.toList());
     }
     //USE CASE C we update

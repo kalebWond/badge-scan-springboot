@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.eaproject.entities.enums.LocationType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,7 @@ public class Location {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "locationId")
+    @JsonIgnore
     private List<Transaction> transactionList;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)

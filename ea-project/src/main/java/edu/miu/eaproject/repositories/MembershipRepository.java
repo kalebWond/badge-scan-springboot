@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface MembershipRepository extends JpaRepository<Membership,Long> {
-    @Query("select ms from Member m JOIN m.memberships ms join ms.plan p join p.locations l where l.id=:locationId and m.id=:memberId")
-    public Membership findMembershipByMemberIdAndLocationId(long memberId, long locationId);
-
-     List<Membership> findByMember_IdAndMembershipType(Long memberId, MembershipType membershipType);
+//    @Query("select ms from Member m JOIN m.memberships ms join ms.plan p join p.locations l where l.id=:locationId and m.id=:memberId")
+    @Query("select ms from Membership ms join ms.plan p join p.locations l where l.id=:locationId and ms.member.id=:memberId ")
+    public List<Membership> findMembershipByMemberIdAndLocationId(long memberId, long locationId);
+    List<Membership> findByMemberIdAndMembershipType(long memberId, MembershipType membershipType);
 
 }
