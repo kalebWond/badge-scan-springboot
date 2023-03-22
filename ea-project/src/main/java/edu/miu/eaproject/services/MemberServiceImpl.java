@@ -1,6 +1,7 @@
 package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
+import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MemberRepository;
 import edu.miu.eaproject.repositories.RoleRepository;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,8 @@ public class MemberServiceImpl implements MemberService{
     private ModelMapper mapper;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private BadgeRepository badgeRepository;
     @Override
     public MemberDTO save(MemberDTO memberDTO) {
         Member member=mapper.map(memberDTO,Member.class);
@@ -53,7 +56,8 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<Transaction> getTransactionsByMember(long memberId) {
-       return memberRepository.getTransactionByMember(memberId);
+//       return memberRepository.getTransactionByMember(memberId);
+        return null;
     }
 
     @Override
@@ -68,7 +72,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<Badge> getBadgesByMember(long memberId) {
-        return memberRepository.getAllBadges(memberId);
+        return badgeRepository.findByMemberId(memberId);
+
+       // return memberRepository.getAllBadges(memberId);
     }
 
 

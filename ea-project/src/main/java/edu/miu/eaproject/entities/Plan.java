@@ -21,7 +21,7 @@ public class Plan {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="plan_location_table")
+    @JoinColumn(name="planId")
     private List<Location> locations =new ArrayList<>();
 
     @OneToMany

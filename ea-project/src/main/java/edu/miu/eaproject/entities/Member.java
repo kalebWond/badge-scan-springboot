@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,8 @@ public class Member {
     private Role role;
 
 
-    @OneToMany
-    @JoinTable(name = "member_membership_table")
+    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "member_membership_table")@
+    @JoinColumn(name = "memberId")
     private List<Membership> memberships;
 }

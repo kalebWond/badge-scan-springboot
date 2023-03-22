@@ -1,5 +1,6 @@
 package edu.miu.eaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.eaproject.entities.enums.MembershipType;
 import edu.miu.eaproject.entities.enums.ResetTime;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class Membership {
     @JoinColumn(name = "membershipId")
     private List<Transaction> transactionList;
 
-
+@JsonIgnore
     @ManyToOne
     private Plan plan;
 
