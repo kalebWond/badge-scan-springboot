@@ -8,6 +8,7 @@ import edu.miu.eaproject.entities.enums.TransactionType;
 import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MembershipRepository;
 import edu.miu.eaproject.repositories.TransactionRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
-
     @Autowired
     BadgeRepository badgeRepository;
     @Autowired
@@ -30,8 +30,8 @@ public class TransactionServiceImpl implements TransactionService{
     public List<Transaction> findTransactionsByMemberId(Long memberId) {
         return null;
     }
-
-
+    @Autowired
+    private ModelMapper mapper;
     // badge id find badge
     // check validity of badge
 
@@ -44,7 +44,7 @@ public class TransactionServiceImpl implements TransactionService{
     // increment current count on membership entity
 
     @Override
-    public Transaction createTransaction(long badgeId, long locationId) {
+    public TransactionDTO createTransaction(long badgeId, long locationId) {
         Badge badge = badgeRepository.findByIdAndStatus(badgeId, BadgeStatus.ACTIVE);
         System.out.println(badge);
 
@@ -90,7 +90,7 @@ public class TransactionServiceImpl implements TransactionService{
         membershipRepository.save(membership);
 //        System.out.println(transaction);
 //        System.out.println(membership);
-        return transaction;
+        return mapper.map(transaction, TransactionDTO.class);
     }
 
     private boolean checkMembershipExpiration(Membership membership) {
