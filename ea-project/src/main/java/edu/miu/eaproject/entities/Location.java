@@ -26,10 +26,10 @@ public class Location {
     @Enumerated(EnumType.STRING)
     private LocationType locationType;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "locationId")
-    @JsonIgnore
-    private List<Transaction> transactionList;
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "location")
+//    //@JoinColumn(name = "locationId")
+//    @JsonIgnore
+//    private List<Transaction> transactionList;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "location_timeslot_table")

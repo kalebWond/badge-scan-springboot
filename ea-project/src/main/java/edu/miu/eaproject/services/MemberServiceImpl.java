@@ -77,8 +77,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<Transaction> getTransactionsByMember(long memberId) {
-//       return memberRepository.getTransactionByMember(memberId);
-        return null;
+
+     return memberRepository.getTransactionByMember(memberId);
+
     }
 
     @Override
