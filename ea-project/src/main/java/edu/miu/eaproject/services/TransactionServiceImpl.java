@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
@@ -25,24 +26,25 @@ public class TransactionServiceImpl implements TransactionService{
     TransactionRepository transactionRepository;
     @Autowired
     MembershipRepository membershipRepository;
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Override
+    public TransactionDTO getTransactionByID(Long id){
+        Transaction transaction = transactionRepository.findById(id).get();
+        return modelMapper.map(transaction, TransactionDTO.class);
+    }
+
+    @Override
+    public List<TransactionDTO> getAllTransactions(){
+        List<Transaction> transactionList = transactionRepository.findAll();
+        return transactionList.stream().map(transaction -> modelMapper.map(transaction,TransactionDTO.class)).collect(Collectors.toList());
+    }
 
     @Override
     public List<Transaction> findTransactionsByMemberId(Long memberId) {
         return null;
     }
-    @Autowired
-    private ModelMapper mapper;
-    // badge id find badge
-    // check validity of badge
-
-    // get member
-    // check membership validity for that member from the badge
-    // if membership is limited, check the numberofAllowances and current count
-    // via membership, get plan and match with locationid from request [get location]
-    // check time slots with current time for that location
-    // add transaction
-    // increment current count on membership entity
-
     @Override
     public TransactionDTO createTransaction(long badgeId, long locationId) {
         Badge badge = badgeRepository.findByIdAndStatus(badgeId, BadgeStatus.ACTIVE);
@@ -90,7 +92,7 @@ public class TransactionServiceImpl implements TransactionService{
         membershipRepository.save(membership);
 //        System.out.println(transaction);
 //        System.out.println(membership);
-        return mapper.map(transaction, TransactionDTO.class);
+        return modelMapper.map(transaction, TransactionDTO.class);
     }
 
     private boolean checkMembershipExpiration(Membership membership) {

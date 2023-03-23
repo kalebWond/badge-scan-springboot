@@ -19,13 +19,13 @@ public class ResetTimeScheduling {
     MembershipRepository membershipRepository;
 
     //schedule for weekly resetTime, at midnight every monday
-    @Scheduled(cron = "0 0 1 * ?") //other option: 0 0 1 * *
+    @Scheduled(cron = "0 0 0 ? * MON")
     public void resetNumberOfCurrentUsageForWeekly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.WEEKLY);
     }
 
     //schedule for monthly resetTime, at midnight 1st of every month
-    @Scheduled(cron = "0 0 1 * ?") //other option: 0 0 1 * *
+    @Scheduled(cron = "0 0 0 1 * ?")
     public void resetNumberOfCurrentUsageForMonthly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.MONTHLY);
     }

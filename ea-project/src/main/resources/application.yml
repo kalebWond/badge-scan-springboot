@@ -1,4 +1,8 @@
 spring:
+  security:
+    user:
+      name: user
+      password: $2y$08$mz3KavH5mF5GYICDNl2qouDfAwZOjt.Wvqa0alddg0Mn1cUEgrjk2
   sql:
     init:
       mode: always
