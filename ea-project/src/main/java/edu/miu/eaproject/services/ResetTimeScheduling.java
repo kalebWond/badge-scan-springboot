@@ -9,6 +9,7 @@ import edu.miu.eaproject.repositories.MembershipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class ResetTimeScheduling {
     MembershipRepository membershipRepository;
 
     //schedule for weekly resetTime, at midnight every monday
-    @Scheduled(cron = "0 10 15 ? * THU")
+    @Scheduled(cron = "0 0 0 ? * MON")
+    @Transactional
     public void resetNumberOfCurrentUsageForWeekly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.WEEKLY);
     }

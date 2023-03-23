@@ -17,8 +17,8 @@ public interface MembershipRepository extends JpaRepository<Membership,Long> {
     public List<Membership> findMembershipByMemberIdAndLocationId(long memberId, long locationId);
     List<Membership> findByMemberIdAndMembershipType(long memberId, MembershipType membershipType);
 
-
-     @Query(value = "update membership_table set currentUsageCount = 0 where resetTime=:resetTime", nativeQuery = true)
+    @Modifying
+    @Query("update Membership m set m.currentUsageCount = 0 where m.resetTime =:resetTime")
     public  void resetCurrentUsageCountByResetTime(ResetTime resetTime);
 
 }
