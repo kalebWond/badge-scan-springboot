@@ -24,6 +24,9 @@ public class Plan {
     @JoinColumn(name="planId")
     private List<Location> locations =new ArrayList<>();
 
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.REMOVE)
+    private List<Membership>  membershipList;
+
     @OneToMany
     @JoinTable(name="plan_role_table")
     private List<Role> roles;
