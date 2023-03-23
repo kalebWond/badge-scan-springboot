@@ -1,6 +1,7 @@
 package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
+import edu.miu.eaproject.exceptions.NotFoundException;
 import edu.miu.eaproject.repositories.LocationRepository;
 import edu.miu.eaproject.repositories.MembershipRepository;
 import edu.miu.eaproject.repositories.PlanRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanServiceImpl implements PlanService{
@@ -51,9 +53,11 @@ public class PlanServiceImpl implements PlanService{
 
     @Override
     public PlanResponseDTO getPlanById(Long planId) {
-        Plan plan= planRepository.findById(planId).get();
-
-        return modelMapper.map(plan, PlanResponseDTO.class);
+        Optional<Plan> plan= planRepository.findById(planId);
+        if(plan.isEmpty()){
+            throw new NotFoundException("E422","Plan not found with id: " + planId);
+        }
+        return modelMapper.map(plan.get(), PlanResponseDTO.class);
     }
 
     @Override
@@ -73,18 +77,24 @@ public class PlanServiceImpl implements PlanService{
 
     @Override
     public PlanResponseDTO updatePlan(Long planId, PlanDTO planDTO) {
-        Plan plan1= planRepository.findById(planId).get();
+        Optional<Plan> planOptional = planRepository.findById(planId);
+        if(planOptional.isEmpty()){
+            throw new NotFoundException("E423","Plan not found with id: " + planId);
+        }
+        Plan plan1 = planOptional.get();
         plan1 = modelMapper.map(planDTO, Plan.class);
         plan1.setId(planId);
         planRepository.save(plan1);
-
         return modelMapper.map(plan1, PlanResponseDTO.class);
     }
 
     @Override
     public void deletePlan(Long planId) {
-        Plan plan1= planRepository.findById(planId).get();
-        planRepository.delete(plan1);
+        Optional<Plan> plan = planRepository.findById(planId);
+        if(plan.isEmpty()){
+            throw new NotFoundException("E424","Plan not found with id: " + planId);
+        }
+        planRepository.delete(plan.get());
     }
 
     @Override

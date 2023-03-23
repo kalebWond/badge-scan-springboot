@@ -1,6 +1,7 @@
 package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
+import edu.miu.eaproject.exceptions.NotFoundException;
 import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MemberRepository;
 import edu.miu.eaproject.repositories.RoleRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -55,12 +57,16 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResponseDTO getMemberById(long id) {
-        return getDto(memberRepository.findById(id).get());
+        Optional<Member> member = memberRepository.findById(id);
+        if(member.isEmpty()){
+            throw new NotFoundException("E415", "Member not found with id: " + id);
+        }
+        return getDto(member.get());
     }
 
     @Override
     public MemberResponseDTO updateMemberbyId(long id,MemberDTO memberDTO) {
-        memberRepository.findById(id).orElseThrow(()->new RuntimeException("Member not found"));
+        memberRepository.findById(id).orElseThrow(()->new NotFoundException("E416", "Member not found"));
         Member member=mapper.map(memberDTO,Member.class);
         member.setId(id);
         member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
@@ -71,7 +77,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void deleteById(long id) {
-        memberRepository.findById(id).orElseThrow(()->new RuntimeException("Member not found"));
+        memberRepository.findById(id).orElseThrow(()->new NotFoundException("E417", "Member not found"));
         memberRepository.deleteById(id);
     }
 
