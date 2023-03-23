@@ -2,12 +2,14 @@ package edu.miu.eaproject.services;
 
 import edu.miu.eaproject.entities.*;
 import edu.miu.eaproject.repositories.LocationRepository;
+import edu.miu.eaproject.repositories.MembershipRepository;
 import edu.miu.eaproject.repositories.PlanRepository;
 import edu.miu.eaproject.repositories.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class PlanServiceImpl implements PlanService{
     private LocationRepository locationRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private MembershipRepository membershipRepository;
 
 
     @Override

@@ -64,4 +64,9 @@ INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,2)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,3)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,4)
 INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,5)
-INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,10)
+INSERT INTO location_timeslot_table(location_table_id,timeSlots_id) values (1,17)
+
+
+-- SET IDENTITY_INSERT transaction_table ON
+-- INSERT INTO transaction_table(id,transactionDateTime,transactionType,badgeId,locationId,membership_id,plan_id) values (1,200,'Dining hall location description','DINING_HALL','Dining',1)
+-- SET IDENTITY_INSERT location_table OFF

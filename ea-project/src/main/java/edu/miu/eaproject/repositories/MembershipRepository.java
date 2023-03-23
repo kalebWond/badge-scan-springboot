@@ -4,6 +4,7 @@ import edu.miu.eaproject.entities.Membership;
 import edu.miu.eaproject.entities.enums.MembershipType;
 import edu.miu.eaproject.entities.enums.ResetTime;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
