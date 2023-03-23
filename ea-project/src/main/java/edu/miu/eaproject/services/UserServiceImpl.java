@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
                             loginRequest.getPassword()
                     )
             );
+
         } catch (BadCredentialsException e) {
             log.info("Bad Credentials");
             throw e;
@@ -45,8 +46,11 @@ public class UserServiceImpl implements UserService {
                 new HashMap<String, Object>() {
                     {
                         put("userId", ((UserDetailsSecurity) result.getPrincipal()).getId());
+                        put("username", ((UserDetailsSecurity) result.getPrincipal()).getUsername());
+                        put("password", ((UserDetailsSecurity) result.getPrincipal()).getPassword());
+
                     } });
-        Member member = memberRepository.findMemberByEmailAddressIgnoreCase(loginRequest.getUsername());
+        Member member = memberRepository.findMemberByEmailIgnoreCase(loginRequest.getUsername());
         MemberLoginResponseDTO memberDTO = modelMapper.map(member, MemberLoginResponseDTO.class);
         var loginResponse = new LoginResponse(accessToken,memberDTO);
         return loginResponse;

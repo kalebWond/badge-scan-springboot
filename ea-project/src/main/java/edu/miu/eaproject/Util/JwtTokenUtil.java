@@ -1,7 +1,10 @@
 package edu.miu.eaproject.Util;
+import edu.miu.eaproject.entities.Member;
 import io.jsonwebtoken.*;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -39,13 +42,8 @@ import java.util.function.Function;
 
 
         public String generateToken(String email, Map<String, Object> claims){
-            return Jwts.builder()
-                    .setSubject(email)
-                    .setClaims(claims)
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis()+expiration))
-                    .signWith(SignatureAlgorithm.HS512, secret)
-                    .compact();
+            return doGenerateToken(claims, email);
+
         }
 
 

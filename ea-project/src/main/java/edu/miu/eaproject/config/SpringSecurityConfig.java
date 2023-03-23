@@ -63,7 +63,9 @@ public class SpringSecurityConfig {
                 .and();
         // Set permissions on endpoints
         http.authorizeHttpRequests()
-                .requestMatchers("/api/v1/authenticate/**").permitAll().anyRequest().authenticated();
+                .requestMatchers("/api/login").permitAll()
+              //  .requestMatchers("/api/authentication/**").permitAll()
+          .anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

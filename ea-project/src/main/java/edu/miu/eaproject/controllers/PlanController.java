@@ -47,4 +47,9 @@ public class PlanController {
         planService.deletePlan(planId);
 
     }
+
+    @PostMapping("/{planId}/locations/{locationId}")
+    public ResponseEntity<PlanDTO> addLocationToPlan(@PathVariable Long planId, @PathVariable Long locationId){
+        return new ResponseEntity<>(planService.addLocationToPlan(planId, locationId), HttpStatus.OK);
+    }
 }
