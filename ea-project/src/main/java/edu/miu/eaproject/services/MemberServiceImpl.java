@@ -69,6 +69,8 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.findById(id).orElseThrow(()->new NotFoundException("E416", "Member not found"));
         Member member=mapper.map(memberDTO,Member.class);
         member.setId(id);
+        member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+        member.setRole(roleRepository.findRoleByRole(memberDTO.getRole()));
         member=memberRepository.save(member);
         return mapper.map(member,MemberResponseDTO.class);
     }
@@ -81,8 +83,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public List<Transaction> getTransactionsByMember(long memberId) {
-//       return memberRepository.getTransactionByMember(memberId);
-        return null;
+
+     return memberRepository.getTransactionByMember(memberId);
+
     }
 
     @Override

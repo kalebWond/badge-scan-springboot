@@ -13,7 +13,7 @@ public class BadgeDTO {
     private Long id;
     private BadgeStatus status;
 
-    private Member member;
+    private MemberResponseDTO member;
 
 
 }
