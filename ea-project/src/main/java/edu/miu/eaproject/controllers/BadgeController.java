@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/badges")
+@RequestMapping("/api/badges")
 public class BadgeController {
 
     @Autowired
@@ -26,6 +26,13 @@ public class BadgeController {
     public ResponseEntity<?> save(@PathVariable long memberId){
         BadgeDTO badge = badgeService.createBadge(memberId);
         return new ResponseEntity(badge, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable long id){
+        badgeService.deleteBadgeById(id);
+        return new ResponseEntity<String>("Badge successfully deleted",HttpStatus.OK);
+
     }
 
 

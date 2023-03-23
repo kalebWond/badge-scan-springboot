@@ -20,8 +20,8 @@ public class Badge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BadgeStatus status;
-    @OneToMany
-    @JoinColumn(name = "badgeId")
+    @OneToMany(mappedBy = "badge")
+//    @JoinColumn(name = "badgeId")
     @JsonIgnore
     private List<Transaction> transactionList;
 

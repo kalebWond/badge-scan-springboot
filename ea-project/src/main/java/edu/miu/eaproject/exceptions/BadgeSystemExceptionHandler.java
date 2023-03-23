@@ -13,17 +13,12 @@ public class BadgeSystemExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MemberNotFoundException.class)
-    public ResponseEntity<?> handleException(MemberNotFoundException exception){
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> handleException(NotFoundException exception){
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode(), exception.getErrorMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BadgeNotFound.class)
-    public ResponseEntity<?> handleException(BadgeNotFound exception){
-        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode(), exception.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
 
     public class ErrorResponse{
         private String errorCode;

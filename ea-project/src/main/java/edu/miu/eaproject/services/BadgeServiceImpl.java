@@ -4,8 +4,7 @@ import edu.miu.eaproject.entities.Badge;
 import edu.miu.eaproject.entities.BadgeDTO;
 import edu.miu.eaproject.entities.Member;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
-import edu.miu.eaproject.exceptions.BadgeNotFound;
-import edu.miu.eaproject.exceptions.MemberNotFoundException;
+import edu.miu.eaproject.exceptions.NotFoundException;
 import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -52,7 +51,7 @@ public class BadgeServiceImpl implements BadgeService {
         Badge badge = new Badge();
         Optional<Member> member = memberRepository.findById(memberId);
         if(member.isEmpty()){
-            throw new MemberNotFoundException("E414", "Member not found with id: " + memberId);
+            throw new NotFoundException("E414", "Member not found with id: " + memberId);
         }
         badge.setMember(member.get());
         badge.setStatus(BadgeStatus.ACTIVE);
@@ -65,7 +64,7 @@ public class BadgeServiceImpl implements BadgeService {
     public BadgeDTO readBadge(Long id) {
         Optional<Badge> badge = badgeRepository.findById(id);
         if(badge.isEmpty()){
-            throw new BadgeNotFound("","Badge not found with id: " + id);
+            throw new NotFoundException("E415","Badge not found with id: " + id);
         }
         return getDto(badge.get());
     }
@@ -78,9 +77,11 @@ public class BadgeServiceImpl implements BadgeService {
     }
 
     @Override
-    public void deleteBadge(Badge badge) {
-        badgeRepository.delete(badge);
+    public void deleteBadgeById(Long id) {
+        badgeRepository.findById(id).orElseThrow(()->new NotFoundException("E421","Badge not found"));
+        badgeRepository.deleteById(id);
     }
+
 
 
     public void deactivateBadge(Long id) {
