@@ -3,8 +3,9 @@ package edu.miu.eaproject.services;
 import edu.miu.eaproject.entities.Badge;
 import edu.miu.eaproject.entities.BadgeDTO;
 import edu.miu.eaproject.entities.Member;
-import edu.miu.eaproject.entities.MemberDTO;
 import edu.miu.eaproject.entities.enums.BadgeStatus;
+import edu.miu.eaproject.exceptions.BadgeNotFound;
+import edu.miu.eaproject.exceptions.MemberNotFoundException;
 import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -39,7 +40,6 @@ public class BadgeServiceImpl implements BadgeService {
         return activeBadge;
     }
 
-
     @Override
     public BadgeDTO createBadge(long memberId) {
         List<Badge> badges = memberRepository.getAllBadges(memberId);
@@ -50,22 +50,24 @@ public class BadgeServiceImpl implements BadgeService {
             }
         }
         Badge badge = new Badge();
-        Member member=memberRepository.findById(memberId).get();
-        badge.setMember(member);
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(member.isEmpty()){
+            throw new MemberNotFoundException("E414", "Member not found with id: " + memberId);
+        }
+        badge.setMember(member.get());
         badge.setStatus(BadgeStatus.ACTIVE);
-        Badge badge1 =  badgeRepository.save(badge);
-        return getDto(badge1);
+        Badge badgeCreated =  badgeRepository.save(badge);
+        return getDto(badgeCreated);
     }
 
 
     @Override
     public BadgeDTO readBadge(Long id) {
         Optional<Badge> badge = badgeRepository.findById(id);
-        if(badge.isPresent()){
-            return getDto(badge.get());
-        } else {
-            return null;
+        if(badge.isEmpty()){
+            throw new BadgeNotFound("","Badge not found with id: " + id);
         }
+        return getDto(badge.get());
     }
 
     @Override

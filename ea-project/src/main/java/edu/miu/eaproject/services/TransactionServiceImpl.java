@@ -5,6 +5,7 @@ import edu.miu.eaproject.entities.enums.BadgeStatus;
 import edu.miu.eaproject.entities.enums.MembershipType;
 import edu.miu.eaproject.entities.enums.RoleType;
 import edu.miu.eaproject.entities.enums.TransactionType;
+import edu.miu.eaproject.exceptions.*;
 import edu.miu.eaproject.repositories.BadgeRepository;
 import edu.miu.eaproject.repositories.MembershipRepository;
 import edu.miu.eaproject.repositories.TransactionRepository;
@@ -47,51 +48,59 @@ public class TransactionServiceImpl implements TransactionService{
     }
     @Override
     public TransactionDTO createTransaction(long badgeId, long locationId) {
-        Badge badge = badgeRepository.findByIdAndStatus(badgeId, BadgeStatus.ACTIVE);
-        System.out.println(badge);
-
-        if(badge == null) {
-            saveTransaction(null, badge, TransactionType.DECLINED, null, null);
-            throw new RuntimeException("Active Badge doesn't exist");
-        }
-        Member member = badge.getMember();
-//        System.out.println(member);
-        Membership membership = membershipRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId).get(0);
-//        System.out.println(membership);
-        if(!checkMembershipExpiration(membership)) {
-            saveTransaction(null, badge, TransactionType.DECLINED, membership, null);
-            throw new RuntimeException("Membership has expired");
-        }
-        if(membership.getMembershipType().equals(MembershipType.LIMITED) && !checkAllowanceUsage(membership)) {
-            saveTransaction(null, badge, TransactionType.DECLINED, membership, null);
-            throw new RuntimeException("Membership allowance used up");
-        }
-        Plan plan = membership.getPlan();
+        Badge badge = null;
+        Membership membership = null;
         Location location = null;
-        for (Location lc : plan.getLocations()) {
-            if (lc.getId().equals(locationId)) {
-                location = lc;
+        Plan plan = null;
+
+        try {
+            badge = badgeRepository.findByIdAndStatus(badgeId, BadgeStatus.ACTIVE);
+
+            if (badge == null) {
+                throw new BadgeNotAcceptedException("E410", "Active Badge doesn't exist");
             }
-        }
-        //
-        // add check if location is null
-        //
-//        System.out.println(location);
-        TimeSlot openHour = getCurrentTimeslot(location);
-//        System.out.println(openHour);
-        if(openHour == null) {
+
+            Member member = badge.getMember();
+            List<Membership> membershipList = membershipRepository.findMembershipByMemberIdAndLocationId(member.getId(), locationId);
+            if(membershipList == null || membershipList.isEmpty()) {
+                throw new BadgeNotAcceptedException("E411", "Membership for the location is not found!");
+            }
+
+            membership = membershipList.get(0);
+
+            if (!checkMembershipExpiration(membership)) {
+                throw new BadgeNotAcceptedException("E412", "Membership has expired!");
+            }
+
+            if (membership.getMembershipType().equals(MembershipType.LIMITED) && !checkAllowanceUsage(membership)) {
+                throw new BadgeNotAcceptedException("E413", "Membership allowance used up!");
+            }
+
+            plan = membership.getPlan();
+            for (Location lc : plan.getLocations()) {
+                if (lc.getId().equals(locationId)) {
+                    location = lc;
+                }
+            }
+
+            // add check if location is null
+
+            TimeSlot openHour = getCurrentTimeslot(location);
+            if (openHour == null) {
+                throw new BadgeNotAcceptedException("E413", "Location is not open at this hour");
+            }
+
+            if (membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
+                throw new BadgeNotAcceptedException("E414", "Member has already entered location at this timeslot");
+            }
+        } catch (BadgeSystemException e) {
             saveTransaction(location, badge, TransactionType.DECLINED, membership, plan);
-            throw new RuntimeException("Location is not open at this hour");
+            throw e;
         }
-        if(membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
-            saveTransaction(location, badge, TransactionType.DECLINED, membership, plan);
-            throw new RuntimeException("Member has already entered location at this timeslot");
-        }
+
         Transaction transaction = saveTransaction(location, badge, TransactionType.ALLOWED, membership, plan);
         membership.setCurrentUsageCount(membership.getCurrentUsageCount()+1);
         membershipRepository.save(membership);
-//        System.out.println(transaction);
-//        System.out.println(membership);
         return modelMapper.map(transaction, TransactionDTO.class);
     }
 
@@ -140,9 +149,4 @@ public class TransactionServiceImpl implements TransactionService{
         transactionRepository.save(transaction);
         return transaction;
     }
-
 }
-
-//if(!(membership.getStartDate().isBefore(todayNow) && membership.getEndDate().isAfter(todayNow))) {
-//        return false;
-//        }
