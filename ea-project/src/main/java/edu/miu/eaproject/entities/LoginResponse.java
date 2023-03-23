@@ -1,20 +1,13 @@
 package edu.miu.eaproject.entities;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginResponse {
     private String accessToken;
-//    private String refreshToken;
+    private MemberLoginResponseDTO member;
 
-    @Data
-    @Builder
-    public static class HttpResponse {
-        private String message;
-        private HttpStatus status;
-    }
 }

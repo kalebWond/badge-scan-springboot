@@ -15,4 +15,5 @@ public interface PlanService {
     PlanResponseDTO updatePlan(Long planId, PlanDTO planDTO);
     void deletePlan(Long planId);
 
+    PlanDTO addLocationToPlan(long planId, long locationId);
 }

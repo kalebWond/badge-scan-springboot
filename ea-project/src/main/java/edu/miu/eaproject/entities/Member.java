@@ -1,11 +1,9 @@
 package edu.miu.eaproject.entities;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -13,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member_table")
+@ToString
 public class Member {
 
     @Id
@@ -24,6 +23,7 @@ public class Member {
     private String lastName;
     @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
     @OneToMany(mappedBy = "member")
     @JsonManagedReference
@@ -34,4 +34,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Membership> memberships;
+
+
+
 }

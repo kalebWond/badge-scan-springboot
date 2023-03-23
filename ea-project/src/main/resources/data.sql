@@ -6,7 +6,7 @@ INSERT INTO  role_table(id,role) values (4,'ADMIN')
 SET IDENTITY_INSERT role_table OFF
 
 SET IDENTITY_INSERT member_table ON
-    INSERT INTO member_table(id,email,firstName,lastName,role_id) values (1,'karna@miu.edu','Karna','Shrestha',1)
+    INSERT INTO member_table(id,email,firstName,lastName,password,role_id) values (1,'Abenezer@miu.edu','Abenezer','Dana','$2a$08$kOieqCi3cs2UtCdPUjhhRO3I9HI8XecWZxEG1TRgSAcTacA7JR86e',1)
 SET IDENTITY_INSERT member_table OFF
 
 SET IDENTITY_INSERT badge_table ON

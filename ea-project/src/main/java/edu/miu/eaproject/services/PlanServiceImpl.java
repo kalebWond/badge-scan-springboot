@@ -82,4 +82,13 @@ public class PlanServiceImpl implements PlanService{
         Plan plan1= planRepository.findById(planId).get();
         planRepository.delete(plan1);
     }
+
+    @Override
+    public PlanDTO addLocationToPlan(long planId, long locationId) {
+        Plan plan1= planRepository.findById(planId).get();
+        Location location=locationRepository.findById(locationId).get();
+        plan1.addLocation(location);
+        planRepository.save(plan1);
+        return modelMapper.map(plan1, PlanDTO.class);
+    }
 }
