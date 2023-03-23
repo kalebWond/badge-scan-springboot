@@ -63,6 +63,8 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.findById(id).orElseThrow(()->new RuntimeException("Member not found"));
         Member member=mapper.map(memberDTO,Member.class);
         member.setId(id);
+        member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+        member.setRole(roleRepository.findRoleByRole(memberDTO.getRole()));
         member=memberRepository.save(member);
         return mapper.map(member,MemberResponseDTO.class);
     }
