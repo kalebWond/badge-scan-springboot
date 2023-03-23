@@ -43,8 +43,9 @@ public class PlanController {
     }
 
     @DeleteMapping("/{planId}")
-    public void deletePlan(@PathVariable Long planId){
+    public ResponseEntity<String> deletePlan(@PathVariable Long planId){
         planService.deletePlan(planId);
+        return new ResponseEntity<>("Plan deleted Successfully",HttpStatus.OK);
 
     }
 

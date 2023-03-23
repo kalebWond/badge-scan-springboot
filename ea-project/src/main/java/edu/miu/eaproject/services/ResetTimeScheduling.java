@@ -19,7 +19,7 @@ public class ResetTimeScheduling {
     MembershipRepository membershipRepository;
 
     //schedule for weekly resetTime, at midnight every monday
-    @Scheduled(cron = "0 0 0 ? * MON")
+    @Scheduled(cron = "0 10 15 ? * THU")
     public void resetNumberOfCurrentUsageForWeekly() {
         membershipRepository.resetCurrentUsageCountByResetTime(ResetTime.WEEKLY);
     }
