@@ -82,8 +82,7 @@ public class BadgeServiceImpl implements BadgeService {
         badgeRepository.deleteById(id);
     }
 
-
-
+    @Override
     public void deactivateBadge(Long id) {
         BadgeDTO badgeDTO = readBadge(id);
         Badge badge = removeDto(badgeDTO);
@@ -91,6 +90,7 @@ public class BadgeServiceImpl implements BadgeService {
         updateBadge(badge);
     }
 
+    @Override
     public void activateBadge(Long id) {
         BadgeDTO badgeDTO = readBadge(id);
         Badge badge = removeDto(badgeDTO);

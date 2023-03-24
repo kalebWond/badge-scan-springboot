@@ -43,10 +43,6 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public List<Transaction> findTransactionsByMemberId(Long memberId) {
-        return null;
-    }
-    @Override
     public TransactionDTO createTransaction(long badgeId, long locationId) {
         Badge badge = null;
         Membership membership = null;
@@ -68,10 +64,12 @@ public class TransactionServiceImpl implements TransactionService{
 
             membership = membershipList.get(0);
 
+            // check expiration date of membership
             if (!checkMembershipExpiration(membership)) {
                 throw new BadgeNotAcceptedException("E412", "Membership has expired!");
             }
 
+            // check usage for limited memberships
             if (membership.getMembershipType().equals(MembershipType.LIMITED) && !checkAllowanceUsage(membership)) {
                 throw new BadgeNotAcceptedException("E413", "Membership allowance used up!");
             }
@@ -83,14 +81,14 @@ public class TransactionServiceImpl implements TransactionService{
                 }
             }
 
-            // add check if location is null
-
+            // look for open timeslots
             TimeSlot openHour = getCurrentTimeslot(location);
             if (openHour == null) {
                 throw new BadgeNotAcceptedException("E413", "Location is not open at this hour");
             }
 
-            if (membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
+            // check multiple entrances for students
+            if (membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
                 throw new BadgeNotAcceptedException("E414", "Member has already entered location at this timeslot");
             }
         } catch (BadgeSystemException e) {

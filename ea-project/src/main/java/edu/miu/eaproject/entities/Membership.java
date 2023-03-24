@@ -34,17 +34,12 @@ public class Membership {
     @Enumerated(EnumType.STRING)
     private ResetTime resetTime;
 
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "membership")
-//  //  @JoinColumn(name = "membership_id")
-//    @JsonIgnore
-//    private List<Transaction> transactionList;
-
     @ManyToOne
     @JoinColumn(name = "memberId")
     @JsonIgnore
     private Member member;
 
-@JsonIgnore
+    @JsonIgnore
     @ManyToOne
     private Plan plan;
 

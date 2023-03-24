@@ -1,6 +1,7 @@
 package edu.miu.eaproject.controllers;
 
 import edu.miu.eaproject.entities.BadgeDTO;
+import edu.miu.eaproject.entities.enums.BadgeStatus;
 import edu.miu.eaproject.services.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,16 @@ public class BadgeController {
 
     }
 
-
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable long id) {
+        BadgeDTO badgeDTO = badgeService.readBadge(id);
+        if(badgeDTO.getStatus().equals(BadgeStatus.ACTIVE)) {
+            badgeService.deactivateBadge(id);
+            return new ResponseEntity<String>("Badge successfully deactivated",HttpStatus.OK);
+        } else {
+            badgeService.activateBadge(id);
+            return new ResponseEntity<String>("Badge successfully activated",HttpStatus.OK);
+        }
+    }
 
 }

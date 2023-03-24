@@ -18,5 +18,7 @@ public interface BadgeService {
 
     List<BadgeDTO> getAllBadges();
     BadgeDTO getActiveBadgeForMember(long memberId);
+    public void deactivateBadge(Long id);
+    public void activateBadge(Long id);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -29,6 +30,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 //    @Override
 //    public MemberDTO save(MemberDTO memberDTO) {
@@ -89,8 +93,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<Membership> getMembershipsByMember(long memberId) {
-        return memberRepository.getAllMemberships(memberId);
+    public List<MembershipDTO> getMembershipsByMember(long memberId) {
+        List<Membership> memberships =  memberRepository.getAllMemberships(memberId);
+        return memberships.stream().map(membership -> modelMapper.map(membership, MembershipDTO.class)).collect(Collectors.toList());
     }
 
     @Override

@@ -64,7 +64,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}/memberships")
     public ResponseEntity<?> getMembershipsByMember(@PathVariable long memberId){
-        return new ResponseEntity<List<Membership>>(memberService.getMembershipsByMember(memberId),HttpStatus.OK);
+        return new ResponseEntity<List<MembershipDTO>>(memberService.getMembershipsByMember(memberId),HttpStatus.OK);
     }
 
 

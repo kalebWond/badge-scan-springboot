@@ -14,7 +14,7 @@ public interface MemberService {
 
     public List<Transaction> getTransactionsByMember(long memberId);
 
-    public List<Membership> getMembershipsByMember(long memberId);
+    public List<MembershipDTO> getMembershipsByMember(long memberId);
     List<Plan> getPlansByMember(long memberId);
     List<Badge> getBadgesByMember(long memberId);
 }

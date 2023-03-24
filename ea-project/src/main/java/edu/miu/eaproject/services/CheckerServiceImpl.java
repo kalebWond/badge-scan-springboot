@@ -23,17 +23,6 @@ public class CheckerServiceImpl implements CheckerService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // USE CASE 2 IS IN BADGE SERVICE
-
-    // USE CASE A IS IN MEMBERSHIP SERVICE
-
-//USE CASE B
-    @Override
-    public List<MembershipDTO> getCheckerMemberships(Long checkerMemberId) {
-        List<Membership> memberships = membershipRepository.findByMemberIdAndMembershipType(checkerMemberId, MembershipType.CHECKER);
-        return memberships.stream().map(membership -> modelMapper.map(membership, MembershipDTO.class)).collect(Collectors.toList());
-    }
-    //USE CASE C we update
     @Override
     public List<PlanDTO> getAllPlans() {
         List<Plan> plans = planRepository.findAll();
@@ -45,33 +34,12 @@ public class CheckerServiceImpl implements CheckerService {
         List<Location> locations = locationRepository.findByPlans_Id(planId);
         return locations.stream().map(location -> modelMapper.map(location, LocationDTO.class)).collect(Collectors.toList());
     }
-              // usecase E // we update
-//    @Override
-//    public TransactionDTO handleBadgeScan(Long memberId, Long checkerId, Long planId, Long locationId, boolean isAllowed) {
-//        if (isAllowed) {
-//            return createTransaction(memberId, planId, locationId, true);
-//        } else {
-//            return createTransaction(memberId, planId, locationId, false);
-//        }
-//    }
-//// THIS IS USE CASE F AND KALEBO WILL HANDEL THE LACKING ATTERBUIT IN THE TRANSACTION  ENTITY
-//    @Override
-//    public TransactionDTO createTransaction(Long memberId, Long planId, Long locationId, boolean isAllowed) {
-//        Transaction transaction = new Transaction();
-//        transaction.setMember(new Member(memberId));
-//        //KALEB WILL HANDLE THIS
-//        transaction.setPlan(new Plan(planId));
-//        transaction.setLocation(new Location(locationId));
-//        transaction.setTimestamp(LocalDateTime.now());
-//        transaction.setAllowed(isAllowed);
-//        Transaction savedTransaction = transactionRepository.save(transaction);
-//        return modelMapper.map(savedTransaction, TransactionDTO.class);
-//    }
-//   // usecase g
-//    @Override
-//    public List<TransactionDTO> getMemberTransactions(Long memberId) {
-//        List<Transaction> transactions = transactionRepository.findByMember_Id(memberId);
-//        return transactions.stream().map(t -> modelMapper.map(t, TransactionDTO.class)).collect(Collectors.toList());
-//    }
+
+    @Override
+    public List<MembershipDTO> getCheckerMemberships(Long checkerMemberId) {
+        List<Membership> memberships = membershipRepository.findByMemberIdAndMembershipType(checkerMemberId, MembershipType.CHECKER);
+        return memberships.stream().map(membership -> modelMapper.map(membership, MembershipDTO.class)).collect(Collectors.toList());
+    }
+
 }
 
