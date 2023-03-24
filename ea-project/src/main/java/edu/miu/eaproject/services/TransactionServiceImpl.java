@@ -90,7 +90,7 @@ public class TransactionServiceImpl implements TransactionService{
                 throw new BadgeNotAcceptedException("E413", "Location is not open at this hour");
             }
 
-            if (membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
+            if (membership.getMembershipType().equals(MembershipType.LIMITED) && member.getRole().getRole().equals(RoleType.STUDENT) && checkMultipleEntranceFromTransaction(badgeId, locationId, openHour)) {
                 throw new BadgeNotAcceptedException("E414", "Member has already entered location at this timeslot");
             }
         } catch (BadgeSystemException e) {
