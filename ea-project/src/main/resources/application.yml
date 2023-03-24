@@ -1,4 +1,11 @@
 spring:
+  security:
+    user:
+      name: user
+      password: $2y$08$mz3KavH5mF5GYICDNl2qouDfAwZOjt.Wvqa0alddg0Mn1cUEgrjk2
+  sql:
+    init:
+      mode: always
   application:
     name: ea-project
   datasource:
@@ -14,10 +21,12 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-      ddl-auto: create
+      ddl-auto: create-drop
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2016Dialect
+    defer-datasource-initialization: true
 logging:
   file:
     name: /Coding/Logging/${spring.application.name}/log
